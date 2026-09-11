@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест: потенциал вашего бизнеса в Telegram</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg: #1C2531;
+    --surface: #242E3C;
+    --surface-2: #2C3849;
+    --line: #3A4657;
+    --cream: #F3EFE6;
+    --cream-dim: #C7CBD3;
+    --amber: #E3A548;
+    --amber-dim: #A9793A;
+    --sage: #74AE8A;
+    --clay: #C97B63;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  .app{
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro-eyebrow{
+    font-size: 14px;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1.15;
+    margin: 0 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .intro-text{
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--cream-dim);
+    max-width: 52ch;
+    margin: 0 0 28px;
+  }
+
+  .intro-meta{
+    display:flex;
+    gap: 18px;
+    margin-bottom: 34px;
+    font-size: 14px;
+    color: var(--cream-dim);
+  }
+
+  .intro-meta span{
+    display:flex;
+    align-items:center;
+    gap: 7px;
+  }
+
+  .dot{
+    width:6px; height:6px; border-radius:50%;
+    background: var(--amber);
+    display:inline-block;
+  }
+
+  button{
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary{
+    background: var(--amber);
+    color: #1C2531;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 15px 28px;
+    border-radius: 8px;
+    transition: transform .15s ease, background .15s ease;
+    align-self: flex-start;
+  }
+  .btn-primary:hover{ background: #EEB562; }
+  .btn-primary:active{ transform: scale(0.98); }
+  .btn-primary:disabled{
+    background: var(--surface-2);
+    color: var(--cream-dim);
+    cursor: not-allowed;
+  }
+  .btn-primary:focus-visible{
+    outline: 2px solid var(--cream);
+    outline-offset: 3px;
+  }
+
+  .btn-ghost{
+    background: transparent;
+    color: var(--cream-dim);
+    font-size: 15px;
+    padding: 10px 4px;
+  }
+  .btn-ghost:hover{ color: var(--cream); }
+
+  /* progress */
+  .progress-row{
+    display:flex;
+    gap: 6px;
+    margin-bottom: 30px;
+  }
+  .progress-seg{
+    height: 4px;
+    flex: 1;
+    background: var(--surface-2);
+    border-radius: 2px;
+    overflow:hidden;
+  }
+  .progress-seg > i{
+    display:block;
+    height:100%;
+    width:0%;
+    background: var(--amber);
+    transition: width .3s ease;
+  }
+  .progress-seg.done > i{ width:100%; }
+  .progress-seg.current > i{ width:100%; }
+
+  .q-count{
+    font-size: 13px;
+    color: var(--cream-dim);
+    margin-bottom: 14px;
+  }
+
+  .q-title{
+    font-family:'Fraunces', serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.3;
+    margin: 0 0 24px;
+    max-width: 34ch;
+  }
+
+  .options{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .option{
+    display:flex;
+    align-items:flex-start;
+    gap: 14px;
+    text-align:left;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid transparent;
+    border-radius: 6px;
+    padding: 16px 18px;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--cream);
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .option:hover{ background: var(--surface-2); }
+  .option:focus-visible{
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+  .option.selected{
+    border-left-color: var(--amber);
+    background: var(--surface-2);
+  }
+  .option .marker{
+    flex: 0 0 auto;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--cream-dim);
+    margin-top: 2px;
+    position: relative;
+  }
+  .option.selected .marker{
+    border-color: var(--amber);
+  }
+  .option.selected .marker::after{
+    content:'';
+    position:absolute;
+    top:3px; left:3px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background: var(--amber);
+  }
+
+  .nav-row{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+  }
+
+  /* result screen */
+  .result-hero{
+    display:flex;
+    align-items:baseline;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .result-score{
+    font-family:'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 600;
+    color: var(--amber);
+    line-height:1;
+  }
+  .result-max{
+    font-size: 18px;
+    color: var(--cream-dim);
+  }
+
+  .result-band{
+    font-family:'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    margin: 6px 0 18px;
+    color: var(--cream);
+  }
+
+  .result-desc{
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--cream-dim);
+    margin-bottom: 28px;
+    max-width: 54ch;
+  }
+
+  .growth-block{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 22px 22px 20px;
+    margin-bottom: 26px;
+  }
+  .growth-block h3{
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 14px;
+  }
+  .growth-item{
+    display:flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--cream-dim);
+  }
+  .growth-item:first-of-type{ border-top:none; padding-top:0; }
+  .growth-item .mark{
+    color: var(--clay);
+    flex: 0 0 auto;
+    font-weight: 700;
+  }
+  .growth-item.ok .mark{ color: var(--sage); }
+
+  .cta-panel{
+    background: linear-gradient(135deg, var(--amber-dim), var(--amber));
+    border-radius: 10px;
+    padding: 24px 24px 22px;
+    color: #241A0C;
+    margin-bottom: 20px;
+  }
+  .cta-panel .cta-label{
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+    margin-bottom: 8px;
+  }
+  .cta-panel p{
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0 0 14px;
+  }
+  .cta-word{
+    display:inline-block;
+    background: #241A0C;
+    color: var(--amber);
+    font-weight: 700;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+  }
+
+  .restart-row{
+    text-align:left;
+  }
+
+  @media (max-width: 420px){
+    h1{ font-size: 28px; }
+    .q-title{ font-size: 21px; }
+    .result-score{ font-size: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app" id="app"></div>
+
+<script>
+const QUESTIONS = [
+  {
+    tag: 'content',
+    title: 'Ведёте ли вы регулярный канал или блог в Telegram?',
+    weakLabel: 'Публикации нерегулярны — часть аудитории просто не видит вас в момент, когда готова заинтересоваться.',
+    options: [
+      { text: 'Канала нет вообще', score: 0 },
+      { text: 'Есть, но публикую редко и хаотично', score: 1 },
+      { text: 'Веду регулярно, но без чёткой стратегии', score: 2 },
+      { text: 'Веду по плану, с системой и целью', score: 3 },
+    ]
+  },
+  {
+    tag: 'outreach',
+    title: 'Как вы работаете с новыми контактами в Telegram?',
+    weakLabel: 'Первые касания идут вручную и от случая к случаю — большинство потенциальных кандидатов не получает системного контакта.',
+    options: [
+      { text: 'Пишу вручную, когда есть время', score: 0 },
+      { text: 'Пишу вручную, но по заготовленному сценарию', score: 1 },
+      { text: 'Часть процесса автоматизирована (шаблоны, напоминания)', score: 2 },
+      { text: 'Есть система или агент, который ведёт первый диалог', score: 3 },
+    ]
+  },
+  {
+    tag: 'base',
+    title: 'Что происходит с вашей базой контактов, с которыми давно не было диалога?',
+    weakLabel: 'База почти не используется повторно — тёплые контакты просто «остывают» и забываются.',
+    options: [
+      { text: 'Базу как таковую не веду', score: 0 },
+      { text: 'Знаю, что там много «спящих», но не возвращаюсь к ним', score: 1 },
+      { text: 'Периодически вручную напоминаю о себе части базы', score: 2 },
+      { text: 'Есть регулярная сегментированная рассылка по всей базе', score: 3 },
+    ]
+  },
+  {
+    tag: 'speed',
+    title: 'Как быстро вы обычно отвечаете на входящее сообщение?',
+    weakLabel: 'Скорость ответа низкая — пока вы молчите, человек успевает потерять интерес или написать кому-то ещё.',
+    options: [
+      { text: 'Когда получится, иногда через день и больше', score: 0 },
+      { text: 'В течение дня', score: 1 },
+      { text: 'В течение нескольких часов', score: 2 },
+      { text: 'Почти мгновенно — кто-то на связи практически всегда', score: 3 },
+    ]
+  },
+  {
+    tag: 'duplication',
+    title: 'Ваши партнёры или новички способны повторить ваш способ привлечения людей?',
+    weakLabel: 'Партнёры не могут повторить ваши действия — рост структуры полностью держится на вас лично.',
+    options: [
+      { text: 'Нет, всё держится на мне одном', score: 0 },
+      { text: 'Пытаются, но получается плохо', score: 1 },
+      { text: 'Часть партнёров справляется самостоятельно', score: 2 },
+      { text: 'Есть понятная система, её легко повторить', score: 3 },
+    ]
+  },
+  {
+    tag: 'qualification',
+    title: 'Как вы понимаете, что человек уже готов к предложению или встрече?',
+    weakLabel: 'Нет системного способа отличить готового кандидата от того, кто просто вежливо отвечает — решения принимаются на глаз.',
+    options: [
+      { text: 'На глаз, по ощущению от переписки', score: 0 },
+      { text: 'Есть примерные критерии, но нигде не фиксирую', score: 1 },
+      { text: 'Отмечаю стадию диалога вручную', score: 2 },
+      { text: 'Есть инструмент, который сам отслеживает стадию', score: 3 },
+    ]
+  },
+  {
+    tag: 'availability',
+    title: 'Что происходит с диалогом, если вы физически недоступны?',
+    weakLabel: 'Когда вы недоступны, диалог просто останавливается — лиды теряются именно в эти моменты.',
+    options: [
+      { text: 'Просто ждёт, пока я освобожусь', score: 0 },
+      { text: 'Иногда теряется совсем', score: 1 },
+      { text: 'Кто-то из команды иногда подхватывает', score: 2 },
+      { text: 'Диалог продолжается без сбоев, я подключаюсь по необходимости', score: 3 },
+    ]
+  },
+  {
+    tag: 'results',
+    title: 'Насколько вы довольны количеством встреч и презентаций в месяц?',
+    weakLabel: 'Количество встреч нестабильно или недостаточно — судя по остальным ответам, причина, скорее всего, уже видна.',
+    options: [
+      { text: 'Их почти нет', score: 0 },
+      { text: 'Есть, но нестабильно, от месяца к месяцу по-разному', score: 1 },
+      { text: 'Стабильно, но хочется больше', score: 2 },
+      { text: 'Полностью доволен, количество растёт', score: 3 },
+    ]
+  },
+];
+
+const MAX_SCORE = QUESTIONS.length * 3;
+
+const BANDS = [
+  {
+    max: 6,
+    title: 'Скрытый потенциал почти не реализован',
+    desc: 'Большая часть возможностей Telegram сейчас не используется. Всё, что происходит с кандидатами и клиентами, держится на ручной работе и личном времени — и именно поэтому результат нестабилен.'
+  },
+  {
+    max: 13,
+    title: 'Потенциал используется частично',
+    desc: 'Какие-то элементы уже работают, но без системы, объединяющей их вместе, значительная часть лидов теряется на разных этапах — от первого касания до встречи.'
+  },
+  {
+    max: 19,
+    title: 'Крепкая ручная работа, не хватает системы',
+    desc: 'Вы неплохо справляетесь вручную, но масштаб ограничен вашим личным временем. Дальнейший рост потребует либо больше часов лично от вас, либо системы, которая возьмёт рутину на себя.'
+  },
+  {
+    max: 24,
+    title: 'Высокий потенциал, есть что усилить точечно',
+    desc: 'База выстроена хорошо. Дальнейший рост — это не пересборка с нуля, а точечная донастройка нескольких узких мест, которые видно из ответов ниже.'
+  },
+];
+
+let current = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+
+const app = document.getElementById('app');
+
+function renderIntro(){
+  app.innerHTML = `
+    <div class="intro-eyebrow">Тест на 2 минуты</div>
+    <h1>Какой потенциал вашего бизнеса в Telegram сейчас не используется?</h1>
+    <p class="intro-text">8 вопросов про то, как у вас реально устроена работа с кандидатами и клиентами в Telegram. В конце — честная картина того, где именно теряется рост, и что из этого решается системой, а не личным временем.</p>
+    <div class="intro-meta">
+      <span><i class="dot"></i>8 вопросов</span>
+      <span><i class="dot"></i>без регистрации</span>
+      <span><i class="dot"></i>результат сразу</span>
+    </div>
+    <button class="btn-primary" id="start-btn">Начать тест</button>
+  `;
+  document.getElementById('start-btn').addEventListener('click', () => {
+    current = 0;
+    renderQuestion();
+  });
+}
+
+function renderProgress(){
+  let segs = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    let cls = 'progress-seg';
+    if(i < current) cls += ' done';
+    if(i === current) cls += ' current';
+    segs += `<div class="${cls}"><i></i></div>`;
+  }
+  return `<div class="progress-row">${segs}</div>`;
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  const selected = answers[current];
+
+  let optsHtml = '';
+  q.options.forEach((opt, idx) => {
+    const isSel = selected === idx;
+    optsHtml += `
+      <button class="option${isSel ? ' selected':''}" data-idx="${idx}">
+        <span class="marker"></span>
+        <span>${opt.text}</span>
+      </button>
+    `;
+  });
+
+  app.innerHTML = `
+    ${renderProgress()}
+    <div class="q-count">Вопрос ${current+1} из ${QUESTIONS.length}</div>
+    <h2 class="q-title">${q.title}</h2>
+    <div class="options">${optsHtml}</div>
+    <div class="nav-row">
+      ${current > 0 ? '<button class="btn-ghost" id="back-btn">Назад</button>' : '<span></span>'}
+      <button class="btn-primary" id="next-btn" ${selected===null ? 'disabled':''}>
+        ${current === QUESTIONS.length - 1 ? 'Показать результат' : 'Дальше'}
+      </button>
+    </div>
+  `;
+
+  document.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      answers[current] = parseInt(btn.getAttribute('data-idx'));
+      renderQuestion();
+    });
+  });
+
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.addEventListener('click', () => {
+    if(answers[current] === null) return;
+    if(current === QUESTIONS.length - 1){
+      renderResult();
+    } else {
+      current++;
+      renderQuestion();
+    }
+  });
+
+  const backBtn = document.getElementById('back-btn');
+  if(backBtn){
+    backBtn.addEventListener('click', () => {
+      current--;
+      renderQuestion();
+    });
+  }
+}
+
+function renderResult(){
+  let total = 0;
+  const weakAreas = [];
+  const strongAreas = [];
+
+  QUESTIONS.forEach((q, i) => {
+    const optIdx = answers[i];
+    const score = q.options[optIdx].score;
+    total += score;
+    if(score <= 1){
+      weakAreas.push(q.weakLabel);
+    } else if(score === 3){
+      strongAreas.push(q.title);
+    }
+  });
+
+  const band = BANDS.find(b => total <= b.max);
+
+  let growthHtml = '';
+  if(weakAreas.length > 0){
+    growthHtml += weakAreas.slice(0,4).map(w => `
+      <div class="growth-item">
+        <span class="mark">—</span>
+        <span>${w}</span>
+      </div>
+    `).join('');
+  }
+  if(weakAreas.length === 0){
+    growthHtml = `
+      <div class="growth-item ok">
+        <span class="mark">✓</span>
+        <span>Явных слабых мест по ответам не видно — рост, скорее всего, будет за счёт точечной оптимизации, а не перестройки процессов.</span>
+      </div>
+    `;
+  }
+
+  app.innerHTML = `
+    <div class="result-hero">
+      <span class="result-score">${total}</span>
+      <span class="result-max">из ${MAX_SCORE}</span>
+    </div>
+    <div class="result-band">${band.title}</div>
+    <p class="result-desc">${band.desc}</p>
+
+    <div class="growth-block">
+      <h3>Где сейчас теряется рост</h3>
+      ${growthHtml}
+    </div>
+
+    <div class="cta-panel">
+      <div class="cta-label">Разбор лично</div>
+      <p>Написав кодовое слово, я разберу вашу структуру подробнее и покажу, что из этого списка можно закрыть системой, а не личным временем.</p>
+      <span class="cta-word">Хочу клиентов</span>
+    </div>
+
+    <div class="restart-row">
+      <button class="btn-ghost" id="restart-btn">Пройти ещё раз</button>
+    </div>
+  `;
+
+  document.getElementById('restart-btn').addEventListener('click', () => {
+    answers = new Array(QUESTIONS.length).fill(null);
+    current = 0;
+    renderIntro();
+  });
+}
+
+renderIntro();
+</script>
+
+</body>
+</html>
