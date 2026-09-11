@@ -304,21 +304,31 @@
     background: #241A0C;
     color: var(--amber);
     font-weight: 700;
-    padding: 10px 18px;
+    padding: 13px 22px;
     border-radius: 6px;
     font-family: 'Fraunces', serif;
     font-style: italic;
     font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .15s ease, background .15s ease;
   }
-
-  .restart-row{
-    text-align:left;
+  .cta-word:hover{ background: #33240F; }
+  .cta-word:active{ transform: scale(0.98); }
+  .cta-word:focus-visible{
+    outline: 2px solid var(--cream);
+    outline-offset: 3px;
   }
 
   @media (max-width: 420px){
     h1{ font-size: 28px; }
     .q-title{ font-size: 21px; }
     .result-score{ font-size: 52px; }
+    .cta-word{
+      display:block;
+      text-align:center;
+      width:100%;
+    }
   }
 </style>
 </head>
@@ -584,19 +594,9 @@ function renderResult(){
     <div class="cta-panel">
       <div class="cta-label">Разбор лично</div>
       <p>Написав кодовое слово, я разберу вашу структуру подробнее и покажу, что из этого списка можно закрыть системой, а не личным временем.</p>
-      <span class="cta-word">Хочу клиентов</span>
-    </div>
-
-    <div class="restart-row">
-      <button class="btn-ghost" id="restart-btn">Пройти ещё раз</button>
+      <a class="cta-word" href="https://t.me/m/re9LxCfOMjdi" target="_blank" rel="noopener">Хочу клиентов</a>
     </div>
   `;
-
-  document.getElementById('restart-btn').addEventListener('click', () => {
-    answers = new Array(QUESTIONS.length).fill(null);
-    current = 0;
-    renderIntro();
-  });
 }
 
 renderIntro();
